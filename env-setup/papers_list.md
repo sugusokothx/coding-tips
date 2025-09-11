@@ -213,3 +213,92 @@ launchctl start com.user.papers.index
 ## まずは A) を入れて回す → B/C に拡張、がスムーズです。
 
 次の一手として、**B) マージ方式**にしますか？それともいきなり **C) API 連携**まで進めますか？
+
+
+
+
+
+その判断、正解だと思います 👍
+
+理由はまさにおっしゃる通りで、
+
+* `.zshrc` は「個人の環境依存」が強い
+* `.sh` スクリプトなら **Git管理できる**
+* 他の人や将来の自分にもそのまま渡せる
+
+ので「共通の操作はシェルスクリプト化」の方が管理性が高いです。
+
+---
+
+## 🔹 実装例: 論文インデックス更新スクリプト
+
+`~/workspace/utils/papers/make_paper_index.sh`
+
+```bash
+#!/usr/bin/env bash
+# 共通 utils venv を使って論文インデックスを更新するスクリプト
+
+UTILS_DIR="$HOME/workspace/utils"
+VENV_DIR="$UTILS_DIR/.venv"
+SCRIPT="$UTILS_DIR/papers/make_paper_index.py"
+
+# venv の存在チェック
+if [ ! -d "$VENV_DIR" ]; then
+  echo "❌ $VENV_DIR が見つかりません。先に共通環境を作成してください。"
+  exit 1
+fi
+
+# スクリプトの存在チェック
+if [ ! -f "$SCRIPT" ]; then
+  echo "❌ $SCRIPT が見つかりません。"
+  exit 1
+fi
+
+# 実行
+source "$VENV_DIR/bin/activate"
+python "$SCRIPT" "$@"
+deactivate
+```
+
+---
+
+## 🔹 セットアップ
+
+```bash
+chmod +x ~/workspace/utils/papers/make_paper_index.sh
+```
+
+---
+
+## 🔹 実行方法
+
+```bash
+~/workspace/utils/papers/make_paper_index.sh
+```
+
+もし頻繁に使うなら `~/workspace/utils/bin/` を作って `PATH` を通しておくと、
+
+```bash
+make_paper_index.sh
+```
+
+みたいにどこからでも呼べます。
+
+---
+
+## 🔹 メリット
+
+* `.zshrc` をいじらなくてもいい
+* Git管理可能 → 環境移行が楽
+* スクリプトに「エラーチェック」を仕込める
+
+---
+
+✅ まとめ
+
+* **よく使う処理は .sh にまとめるのが吉**
+* `.zshrc` は「自分のターミナル環境カスタマイズ」だけに使い、運用ロジックは Git管理できる `.sh` にするのがベスト
+
+---
+
+👉 では次の一手は「utils/bin を作って PATH に通す」方向に進めますか？
