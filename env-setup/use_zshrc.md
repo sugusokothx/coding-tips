@@ -1,3 +1,11 @@
+## .zshrc の中身
+# ---- Utils Python  ----
+export PATH="$HOME/workspace/utils/bin:$PATH"
+
+
+
+
+
 全然OKです 🙆‍♂️
 `.zshrc` は **Zsh の設定ファイル**で、macOS ではデフォルトのシェルが Zsh なので、ここに alias や環境変数を追記すればターミナル起動時に反映されます。
 
@@ -81,3 +89,5 @@ alias | grep workon-utils
 ---
 
 👉 今回の alias (`workon-utils` / `utilpy`) を実際に追記する用に、私が **コピペ用の追記ブロック**を出しておきましょうか？
+
+
