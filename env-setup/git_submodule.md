@@ -120,3 +120,52 @@ git push
 
 必要なら、**あなたの実リポ名でコピペ一発版**（`sugusokothx` 固定、`main` 前提）をまとめたシェルを出します。
 このまま進めますか？それとも push 前の「中身チェック & 置換（機密キーワード掃除）」のテンプレも付けますか？
+
+
+いい感じ！🙌
+`origin` は **workspace-mono** を指す正しい状態になっています。
+あとは **初回 push（upstream 設定つき）** を流せば完了です。
+
+## やること（コピペOK）
+
+```bash
+# 念のため差分を確認
+git status
+
+# .gitmodules も追跡されているか軽く確認（任意）
+cat .gitmodules
+
+# 初回 push（以後は git push だけでOK）
+git push -u origin main
+```
+
+## サブモジュールの健全性チェック（任意）
+
+```bash
+# 参照しているコミットとURLを確認
+git submodule status
+git config -f .gitmodules --get-regexp url
+```
+
+期待例：
+
+```
+ 2f3abc... coding-tips (heads/main)
+ a1b2c3d... utils       (heads/main)
+submodule.motor-control.url https://github.com/…/motor-control.git
+submodule.coding-tips.url   https://github.com/sugusokothx/coding-tips.git
+submodule.utils.url         https://github.com/sugusokothx/utils.git
+```
+
+## クローン時の注意（READMEに書いておくと親切）
+
+```bash
+git clone --recurse-submodules https://github.com/sugusokothx/workspace-mono.git
+# or 既存クローンなら
+git submodule update --init --recursive
+```
+
+push が通ったら、GitHub 上で `coding-tips` / `utils` / `motor-control` が
+\*\*リンク（サブモジュール）\*\*として表示されていれば完成です 🎉
+
+もし push 時にエラーが出たら、そのログを貼ってください。すぐ潰します！
