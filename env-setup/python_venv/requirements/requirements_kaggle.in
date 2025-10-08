@@ -1,0 +1,55 @@
+# ================================================================
+# Kaggle Challenge Development Environment
+# EDA + Feature Engineering + Modeling + Evaluation + Polars
+# ================================================================
+
+# --- Core (DataFrame / EDA) ---
+pandas>=2.2
+numpy>=1.26
+polars>=1.9.0
+scipy>=1.13
+matplotlib>=3.8
+seaborn>=0.13
+scikit-learn>=1.5
+
+# --- Gradient Boosting / Tree Models ---
+xgboost>=2.1
+lightgbm>=4.3
+catboost>=1.2
+
+# --- Model Tuning / Validation ---
+optuna>=3.6
+mlflow>=2.16     # experiment tracking (optional)
+
+# --- Feature Engineering / Utilities ---
+category-encoders>=2.6
+feature-engine>=1.8
+missingno>=0.5.3
+tqdm>=4.66
+
+# --- Notebook / Visualization ---
+jupyter
+ipykernel
+notebook
+plotly>=5.23
+pandas-profiling>=3.7
+sweetviz>=2.3
+
+# --- Text / Time Series (optional but useful) ---
+tsfresh>=0.20
+statsmodels>=0.14
+pmdarima>=2.0
+prophet>=1.1
+nltk>=3.9
+transformers>=4.44
+
+# --- File I/O ---
+openpyxl>=3.1
+pyarrow>=17.0
+fastparquet>=2024.5
+
+# --- Development Tools ---
+black
+ruff
+pytest
+jupyterlab
