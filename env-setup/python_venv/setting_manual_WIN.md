@@ -28,6 +28,12 @@ winget install --id Obsidian.Obsidian -e --source winget
 # ==== 2) pyenv-win ====
 winget install --id pyenv.pyenv-win -e --source winget
 
+# ==== 2) pyenv-win ====
+Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+
 # システム環境変数に pyenv パスが追加されるまで一度シェルを再起動するのが確実
 # 以降は "新しい" PowerShell（管理者でなくてOK）を開いて実行してください
 ```
@@ -41,7 +47,7 @@ winget install --id pyenv.pyenv-win -e --source winget
 ```powershell
 # ==== 3) Python 統一バージョン ====
 # バージョンはチームで決めた値に合わせて変更可
-$PYVER = "3.11.9"
+$PYVER = "3.13.7"
 pyenv install $PYVER
 pyenv global  $PYVER
 python --version
