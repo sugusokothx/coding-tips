@@ -316,3 +316,95 @@ jobs:
 * CI は **working-directory** を切替え、各プロジェクトを独立検証。
 
 これにより、**衝突のない依存・高速なセットアップ・安全な秘密管理** を実現できます。
+
+
+
+なるほど状況わかりました 👍
+`requirements.txt` にはちゃんと `ipykernel` が入っているのに、.venv の中には入ってない、という状態ですね。
+
+---
+
+## 原因
+
+`requirements.in → pip-compile → requirements.txt` まではできているけど、
+
+> **新しい `requirements.txt` を .venv にインストールしていない**
+
+ので、`.venv` 側にはまだ `ipykernel` が入っていません。
+
+その証拠がこれですね：
+
+```bash
+(.venv) python -m pip show ipykernel
+WARNING: Package(s) not found: ipykernel
+```
+
+---
+
+## やること：.venv に再インストール
+
+プロジェクトルート（`code` ディレクトリ）で `.venv` を有効化した状態で、もう一度 **pip-sync** してください。
+
+```bash
+cd /Users/sugusokothx/workspace/kensho-san/code
+
+# すでに .venv が有効なら不要ですが一応
+source .venv/bin/activate
+
+# stock_japanese 配下の requirements.txt を同期
+pip-sync stock_japanese/requirements.txt
+```
+
+終わったら、ちゃんと入ったか確認：
+
+```bash
+python -m pip show ipykernel
+```
+
+ここで `Name: ipykernel` が表示されればOKです。
+
+---
+
+## VSCode 側の確認ポイント
+
+1. **Pythonインタプリタが .venv を指しているか**
+
+   * `⌘⇧P` →「Python: Select Interpreter」
+   * パスが
+     `/Users/sugusokothx/workspace/kensho-san/code/.venv/bin/python`
+     になっているものを選択。
+
+2. **Notebook のカーネルも .venv を選ぶ**
+
+   * `.ipynb` を開く
+   * 右上のカーネル名をクリック
+   * `.venv (3.13.7)` とか、さっき選んだインタプリタと同じものを選択
+
+それでも「ipykernel が必要です」と出る場合は、そのノートブックが別の環境を見ている可能性が高いので、
+
+ノートブック内から
+
+```python
+import sys
+print(sys.executable)
+```
+
+を実行して、どの Python を見ているか確認してみてください。
+ここが `.venv/bin/python` になっていればOKです。
+
+---
+
+## ここまでやれば…
+
+* `ipykernel` が .venv にインストールされる
+* VSCode から `.venv` カーネルを選べるようになる
+* `.ipynb` のセルが普通に実行できる状態になります 💻
+
+まずは
+
+```bash
+pip-sync stock_japanese/requirements.txt
+python -m pip show ipykernel
+```
+
+までやってみて、結果を教えてもらえれば、次のトラブルシュートも一緒にできます。

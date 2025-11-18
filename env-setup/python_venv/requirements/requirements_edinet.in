@@ -1,0 +1,38 @@
+# Core data processing
+pandas>=2.2
+numpy>=1.26
+
+# HTTP / API communication
+requests
+python-dotenv
+
+# XBRL / XML parsing
+lxml
+beautifulsoup4
+
+# Market data supplement
+yfinance
+
+# Excel / CSV export
+openpyxl
+tqdm
+
+# Development tools
+black
+ruff
+pytest
+pip-tools
+
+# File formats (Parquet / JSON)
+pyarrow
+orjson
+
+# Analysis / Stats
+scipy
+scikit-learn
+
+matplotlib
+
+# Jupyter / Notebooks
+ipykernel
+jupyterlab
